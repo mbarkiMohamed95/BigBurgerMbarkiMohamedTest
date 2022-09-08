@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bigburgermbarkimohamedtest.R
 import com.example.bigburgermbarkimohamedtest.databinding.FragmentHomeBinding
 import com.example.bigburgermbarkimohamedtest.helpers.states.DataState
 import com.example.bigburgermbarkimohamedtest.presentation.home.adapter.BurgerAdapter
@@ -49,7 +47,7 @@ class HomeFragment : Fragment() {
     }
 
     fun observeBurgersResponse(){
-        viewModel.blobsDataState.observe(viewLifecycleOwner) {
+        viewModel.dataState.observe(viewLifecycleOwner) {
             when(it){
                 is DataState.Success ->{
                     binding.progressBar.visibility = View.GONE

@@ -10,8 +10,6 @@ import com.example.bigburgermbarkimohamedtest.usescase.burgerMenu.manager.Burger
 import com.example.bigburgermbarkimohamedtest.usescase.burgerMenu.model.BurgerMenuUIModel
 import com.example.mbarkimohamedblobstorageproject.appUtilsDispatcher.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,12 +20,12 @@ class HomeViewModel @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) :
     ViewModel() {
-    private val _blobsDataState: MutableLiveData<DataState<List<BurgerMenuUIModel>>> =
+    private val _dataState: MutableLiveData<DataState<List<BurgerMenuUIModel>>> =
         MutableLiveData(
             DataState.Idle
         )
 
-    val blobsDataState: LiveData<DataState<List<BurgerMenuUIModel>>> get() = _blobsDataState
+    val dataState: LiveData<DataState<List<BurgerMenuUIModel>>> get() = _dataState
 
     fun handleAction(homeIntent: HomeIntent) {
         when (homeIntent) {
@@ -41,7 +39,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             burgerMenuUsesCaseInteraction.getAllBurgerMenu(this).collect {
                 withContext(dispatchers.main){
-                    _blobsDataState.value = it
+                    _dataState.value = it
                 }
             }
         }
